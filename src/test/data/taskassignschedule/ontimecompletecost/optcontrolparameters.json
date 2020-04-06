@@ -1,0 +1,8 @@
+{
+  "onTimeStart": 0,
+  "onTimeComplete": 1,
+  "technicianUtilization": 0,
+  "technicianRelocation": 0,
+  "taskPriorityFactors": {"1": 1, "2": 1},
+  "timeTolerance": 0
+}

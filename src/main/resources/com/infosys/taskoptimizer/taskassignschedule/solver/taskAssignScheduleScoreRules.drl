@@ -1,0 +1,125 @@
+package com.infosys.taskoptimizer.taskassignschedule.solver;
+    dialect "java"
+
+import java.util.List;
+import java.util.ArrayList;
+
+import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScoreHolder;
+
+import com.infosys.taskoptimizer.taskassignschedule.domain.TaskAssignment;
+import com.infosys.taskoptimizer.taskassignschedule.domain.Task;
+import com.infosys.taskoptimizer.taskassignschedule.domain.Technician;
+import com.infosys.taskoptimizer.taskassignschedule.domain.OptControlParameters;
+import com.infosys.taskoptimizer.taskassignschedule.drools.PeriodWrapper;
+import com.infosys.taskoptimizer.taskassignschedule.drools.TechnicianPeriod;
+import com.infosys.taskoptimizer.taskassignschedule.TaskAssignSchedule;
+
+global HardSoftLongScoreHolder scoreHolder;
+
+// Setup
+rule "period"
+    salience 3
+    when
+        TaskAssignSchedule($periodFrom : periodFrom, $periodTo : periodTo)
+    then
+        for (int i = $periodFrom; i <= $periodTo; i++) {
+            insert(new PeriodWrapper(i));
+        }
+end
+
+// Introduce TechnicianPeriod to score efficiently
+rule "technicianPeriod"
+    salience 2
+    when
+        PeriodWrapper($period : period);
+        $technician : Technician()
+        $taskAssignments : ArrayList() from collect (
+            TaskAssignment(technician == $technician, start == $period)
+        )
+    then
+        insertLogical(new TechnicianPeriod($technician, $period, $taskAssignments));
+end
+
+// ############################################################################
+// Hard constraints
+// ############################################################################
+
+rule "skill"
+    when
+        TaskAssignment(matchingSkill == false)
+    then
+        scoreHolder.addHardConstraintMatch(kcontext, -1);
+end
+
+rule "token"
+    when
+        TaskAssignment(matchingToken == false)
+    then
+        scoreHolder.addHardConstraintMatch(kcontext, -1);
+end
+
+rule "technicianCapacity"
+    when
+        TechnicianPeriod($capacityRemaining: capacityRemaining < 0)
+    then
+        scoreHolder.addHardConstraintMatch(kcontext, $capacityRemaining);
+end
+
+rule "technicianLocation"
+    when
+        TechnicianPeriod($noOfLocations : noOfLocations > 1)
+    then
+        scoreHolder.addHardConstraintMatch(kcontext, -$noOfLocations + 1);
+end
+
+// ############################################################################
+// Soft constraints
+// ############################################################################
+
+rule "onTimeStartDeviation"
+    when
+        TaskAssignSchedule($optControlParameters : optControlParameters)
+        accumulate(
+            $taskAssignment : TaskAssignment($task: task, startDeviation < 0);
+            $onTimeStartDeviation : sum($taskAssignment.getFactoredStartDeviation($optControlParameters.getTaskPriorityFactor($task.priority)))
+         )
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext, $optControlParameters.onTimeStart * $onTimeStartDeviation);
+end
+
+rule "onTimeEndDeviation"
+    when
+        TaskAssignSchedule($optControlParameters : optControlParameters, $durationsPerPeriod : durationsPerPeriod)
+        accumulate(
+            $taskAssignment : TaskAssignment($task: task, endDeviation < 0);
+            $onTimeEndDeviation : sum($taskAssignment.getFactoredEndDeviation($optControlParameters.getTaskPriorityFactor($task.priority)))
+         )
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext, $optControlParameters.onTimeComplete * $onTimeEndDeviation);
+end
+
+rule "technicianUtilization"
+    when
+        TaskAssignSchedule($optControlParameters : optControlParameters)
+        $technician : Technician($totalCapacity : totalCapacity)
+        accumulate(
+            $taskAssignment : TaskAssignment(technician == $technician, $duration : duration);
+            $capacityUsed : sum($duration)
+         )
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext,
+                        $optControlParameters.technicianUtilization * Math.round(10 * $capacityUsed / $totalCapacity));
+end
+
+rule "technicianRelocation"
+    when
+        TaskAssignSchedule($optControlParameters : optControlParameters)
+        TechnicianPeriod($location: location, $technician : technician, $period : period, noOfLocations == 1)
+        exists TechnicianPeriod(technician == $technician, period == $period + 1, noOfLocations == 1, location != $location)
+        accumulate(
+            TechnicianPeriod(technician == $technician, period == $period + 1, noOfLocations == 1, location != $location);
+            $relocations : count(1)
+         )
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext, $optControlParameters.technicianRelocation * $relocations);
+end

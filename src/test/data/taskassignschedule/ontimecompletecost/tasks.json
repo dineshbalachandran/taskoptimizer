@@ -1,0 +1,22 @@
+[{
+  "id" : 1,
+  "priority" : 1,
+  "skill": 1,
+  "location": 2,
+  "earliestStart": 2,
+  "latestStart": 2,
+  "duration": 2,
+  "latestEnd": 1,
+  "token": 1
+},
+{
+  "id" : 2,
+  "priority" : 2,
+  "skill": 2,
+  "location": 2,
+  "earliestStart": 1,
+  "latestStart": 1,
+  "duration": 3,
+  "latestEnd": 7,
+  "token": 1
+}]
