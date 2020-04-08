@@ -17,23 +17,35 @@ public class TechnicianPeriod  implements Comparable<TechnicianPeriod> {
     public final int period;
 
     private int capacityRemaining;
-    private Set<Integer> locations = new HashSet<>();
+    private Set<Integer> taskLocations = new HashSet<>();
+    private int location;
 
-    public TechnicianPeriod(Technician technician, int period, List<TaskAssignment> taskAssignments) {
+    public TechnicianPeriod(Technician technician, int period, List<TaskAssignment> taskAssignments, TechnicianPeriod prevTechPeriod) {
         this.technician = technician;
         this.period = period;
 
         capacityRemaining = technician.capacities.getOrDefault(period, 0);
+        location = technician.location;
 
         for (TaskAssignment taskAssignment : taskAssignments) {
             addTaskAssignment(taskAssignment);
         }
+
+        setLocation(prevTechPeriod);
+    }
+
+    private void setLocation(TechnicianPeriod prevTechPeriod) {
+        if (getNoOfTaskLocations() == 1)
+            location = taskLocations.iterator().next();
+        else if (prevTechPeriod != null)
+            location = prevTechPeriod.location;
+        else
+            location = technician.location;
     }
 
     private void addTaskAssignment(TaskAssignment taskAssignment) {
-
         capacityRemaining -= taskAssignment.getDuration();
-        locations.add(taskAssignment.task.location);
+        taskLocations.add(taskAssignment.task.location);
     }
 
     public Technician getTechnician() {
@@ -48,17 +60,17 @@ public class TechnicianPeriod  implements Comparable<TechnicianPeriod> {
         return capacityRemaining;
     }
 
-    public Set<Integer> getLocations() {
-        return locations;
+    public Set<Integer> getTaskLocations() {
+        return taskLocations;
     }
 
-    public int getNoOfLocations() {
-        return locations.size();
+    public int getNoOfTaskLocations() {
+        return taskLocations.size();
     }
 
     //call this method only if there is one location, i.e. the size of locations is 1.
-    public Integer getLocation() {
-        return locations.iterator().next();
+    public int getLocation() {
+        return location;
     }
 
     private static final Comparator<TechnicianPeriod> COMPARATOR =
@@ -84,11 +96,12 @@ public class TechnicianPeriod  implements Comparable<TechnicianPeriod> {
         return Objects.equals(technician, other.technician) &&
                 period == other.period &&
                 capacityRemaining == other.capacityRemaining &&
-                locations.equals(other.locations);
+                location == other.location &&
+                taskLocations.equals(other.taskLocations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(technician, period, capacityRemaining, locations.hashCode());
+        return Objects.hash(technician, period, capacityRemaining, location, taskLocations.hashCode());
     }
 }

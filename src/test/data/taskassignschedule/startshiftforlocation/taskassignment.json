@@ -1,10 +1,15 @@
 [{
   "task": {"id": 1},
   "technician": {"id": 1},
-  "start": 2
+  "start": 5
 },
 {
   "task": {"id": 2},
+  "technician": {"id": 1},
+  "start": 1
+},
+{
+  "task": {"id": 3},
   "technician": {"id": 1},
   "start": 1
 }]

@@ -18,17 +18,29 @@ global HardSoftLongScoreHolder scoreHolder;
 
 // Setup
 rule "period"
-    salience 3
+    salience 4
     when
         TaskAssignSchedule($periodFrom : periodFrom, $periodTo : periodTo)
     then
-        for (int i = $periodFrom; i <= $periodTo; i++) {
+        for (int i = $periodFrom - 1; i <= $periodTo; i++) {
             insert(new PeriodWrapper(i));
         }
 end
 
+
 // Introduce TechnicianPeriod to score efficiently
-rule "technicianPeriod"
+rule "BootstrapTechnicianPeriod"
+    salience 3
+    when
+        TaskAssignSchedule($periodFrom : periodFrom, $periodTo : periodTo)
+        PeriodWrapper(period == $periodFrom - 1);
+        $technician : Technician()
+    then
+        insertLogical(new TechnicianPeriod($technician, $periodFrom - 1, java.util.Collections.EMPTY_LIST, null));
+end
+
+
+rule "TechnicianPeriod"
     salience 2
     when
         PeriodWrapper($period : period);
@@ -36,8 +48,9 @@ rule "technicianPeriod"
         $taskAssignments : ArrayList() from collect (
             TaskAssignment(technician == $technician, start == $period)
         )
+        $prevTechPeriod : TechnicianPeriod(technician == $technician, period == $period - 1)
     then
-        insertLogical(new TechnicianPeriod($technician, $period, $taskAssignments));
+        insertLogical(new TechnicianPeriod($technician, $period, $taskAssignments, $prevTechPeriod));
 end
 
 // ############################################################################
@@ -67,9 +80,9 @@ end
 
 rule "technicianLocation"
     when
-        TechnicianPeriod($noOfLocations : noOfLocations > 1)
+        TechnicianPeriod($noOfTaskLocations : noOfTaskLocations > 1)
     then
-        scoreHolder.addHardConstraintMatch(kcontext, -$noOfLocations + 1);
+        scoreHolder.addHardConstraintMatch(kcontext, -$noOfTaskLocations + 1);
 end
 
 // ############################################################################
@@ -114,10 +127,10 @@ end
 rule "technicianRelocation"
     when
         TaskAssignSchedule($optControlParameters : optControlParameters)
-        TechnicianPeriod($location: location, $technician : technician, $period : period, noOfLocations == 1)
-        exists TechnicianPeriod(technician == $technician, period == $period + 1, noOfLocations == 1, location != $location)
+        TechnicianPeriod($location: location, $technician : technician, $period : period)
+        exists TechnicianPeriod(technician == $technician, period == $period + 1, location != $location, noOfTaskLocations == 1)
         accumulate(
-            TechnicianPeriod(technician == $technician, period == $period + 1, noOfLocations == 1, location != $location);
+            TechnicianPeriod(technician == $technician, period == $period + 1, location != $location, noOfTaskLocations == 1);
             $relocations : count(1)
          )
     then
