@@ -1,27 +1,30 @@
 package com.infosys.taskoptimizer.taskassignschedule.domain;
 
+import java.io.Serializable;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
-public class Technician {
+public class Technician implements Serializable {
 
     //A unique identifier for each technician
     public int id;
 
     //A map of skills, with key representing skills possessed by the technician expressed as a skill index.
-    // The value is the efficiency of the technician in the skill expressed as a decimal fraction (1.1, 1, 0.8 etc)
+    //The value is the efficiency of the technician in the skill expressed as a decimal fraction (1.1, 1, 0.8 etc)
     public Map<Integer, Float> skills;
 
     //District, Region, or ESA represented as a number index that the Technician belongs to
     public int location;
 
     //Map of capacity, with key representing the period-group index and
-    // The value the capacity is the no. of periods in the technician is available in that period-group
+    //The value the capacity is the no. of periods in the technician is available in that period-group
     public Map<Integer, Integer> capacities;
 
     //Token indices possessed by the technician, if any
     public Set<Integer> tokens;
+
+    //Fixed cost of technician
+    public int cost;
 
     private int totalCapacity;
 
@@ -30,14 +33,14 @@ public class Technician {
     public Technician(int id,
                       Map<Integer, Float> skills,
                       int location, Map<Integer, Integer> capacities,
-                      Set<Integer> tokens) {
+                      Set<Integer> tokens,
+                      int cost) {
         this.id = id;
         this.skills = skills;
         this.location = location;
-        this.capacities = capacities;
+        setCapacities(capacities);
         this.tokens = tokens;
-
-        setTotalCapacity();
+        this.cost = cost;
     }
 
     public int getId() {
@@ -83,27 +86,17 @@ public class Technician {
 
     public int getTotalCapacity() { return totalCapacity; }
 
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
     private void setTotalCapacity() {
         totalCapacity = 0;
         capacities.values().forEach(capacity -> totalCapacity += capacity);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        final Technician other = (Technician) o;
-        return  id == other.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

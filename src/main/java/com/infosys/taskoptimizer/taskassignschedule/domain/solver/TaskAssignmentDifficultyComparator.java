@@ -10,10 +10,8 @@ public class TaskAssignmentDifficultyComparator implements Comparator<TaskAssign
 
     private static final Comparator<Task> TASK_COMPARATOR = Comparator.comparingInt(Task::getDuration);
 
-    //TODO: check if a id field is required
     private static final Comparator<TaskAssignment> COMPARATOR =
             Comparator.comparing(TaskAssignment::getTask, TASK_COMPARATOR);
-
 
     @Override
     public int compare(TaskAssignment a, TaskAssignment b) {

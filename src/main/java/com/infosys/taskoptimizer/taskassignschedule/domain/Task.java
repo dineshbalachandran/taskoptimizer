@@ -1,9 +1,6 @@
 package com.infosys.taskoptimizer.taskassignschedule.domain;
 
-import com.infosys.taskoptimizer.taskassignschedule.drools.TechnicianPeriod;
-
 import java.io.Serializable;
-import java.util.Objects;
 
 public class Task implements Serializable {
 
@@ -65,7 +62,7 @@ public class Task implements Serializable {
                 int latestStart,
                 int duration,
                 int latestEnd) {
-       this(id, priority, skill, location, earliestStart, latestStart, duration, latestEnd, -1);
+        this(id, priority, skill, location, earliestStart, latestStart, duration, latestEnd, -1);
     }
 
     public int getId() {
@@ -139,24 +136,4 @@ public class Task implements Serializable {
     public void setLatestEnd(int latestEnd) {
         this.latestEnd = latestEnd;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        final Task other = (Task) o;
-        return  id == other.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
 }

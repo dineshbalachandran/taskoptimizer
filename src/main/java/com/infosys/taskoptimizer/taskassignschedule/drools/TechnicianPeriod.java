@@ -20,20 +20,6 @@ public class TechnicianPeriod  implements Comparable<TechnicianPeriod> {
     private Set<Integer> taskLocations = new HashSet<>();
     private int location;
 
-    public TechnicianPeriod(Technician technician, int period, List<TaskAssignment> taskAssignments, TechnicianPeriod prevTechPeriod) {
-        this.technician = technician;
-        this.period = period;
-
-        capacityRemaining = technician.capacities.getOrDefault(period, 0);
-        location = technician.location;
-
-        for (TaskAssignment taskAssignment : taskAssignments) {
-            addTaskAssignment(taskAssignment);
-        }
-
-        setLocation(prevTechPeriod);
-    }
-
     private void setLocation(TechnicianPeriod prevTechPeriod) {
         if (getNoOfTaskLocations() == 1)
             location = taskLocations.iterator().next();
@@ -41,6 +27,19 @@ public class TechnicianPeriod  implements Comparable<TechnicianPeriod> {
             location = prevTechPeriod.location;
         else
             location = technician.location;
+    }
+
+    public TechnicianPeriod(Technician technician, int period, List<TaskAssignment> taskAssignments, TechnicianPeriod prevTechPeriod) {
+        this.technician = technician;
+        this.period = period;
+
+        capacityRemaining = technician.capacities.getOrDefault(period, 0);
+
+        for (TaskAssignment taskAssignment : taskAssignments) {
+            addTaskAssignment(taskAssignment);
+        }
+
+        setLocation(prevTechPeriod);
     }
 
     private void addTaskAssignment(TaskAssignment taskAssignment) {
@@ -75,8 +74,15 @@ public class TechnicianPeriod  implements Comparable<TechnicianPeriod> {
 
     private static final Comparator<TechnicianPeriod> COMPARATOR =
             comparing((TechnicianPeriod technicianPeriod) -> technicianPeriod.technician.id)
-                    .thenComparingInt(TechnicianPeriod::getPeriod);
+                    .thenComparingInt(TechnicianPeriod::getPeriod)
+                    .thenComparingInt(TechnicianPeriod::getLocation)
+                    .thenComparingInt(TechnicianPeriod::getCapacityRemaining)
+                    .thenComparingInt(TechnicianPeriod::getNoOfTaskLocations);
 
+    /*private static final Comparator<TechnicianPeriod> COMPARATOR =
+            comparing((TechnicianPeriod technicianPeriod) -> technicianPeriod.technician.id)
+                    .thenComparingInt(TechnicianPeriod::getPeriod)
+                    .thenComparing(TechnicianPeriod::isTaskAssigned);*/
     @Override
     public int compareTo(TechnicianPeriod o) {
         return COMPARATOR.compare(this, o);
@@ -95,13 +101,36 @@ public class TechnicianPeriod  implements Comparable<TechnicianPeriod> {
         final TechnicianPeriod other = (TechnicianPeriod) o;
         return Objects.equals(technician, other.technician) &&
                 period == other.period &&
-                capacityRemaining == other.capacityRemaining &&
                 location == other.location &&
+                capacityRemaining == other.capacityRemaining &&
                 taskLocations.equals(other.taskLocations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(technician, period, capacityRemaining, location, taskLocations.hashCode());
+        return Objects.hash(technician, period, location, capacityRemaining, taskLocations.hashCode());
     }
+
+/*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        final TechnicianPeriod other = (TechnicianPeriod) o;
+        return Objects.equals(technician, other.technician) &&
+                period == other.period &&
+                taskAssigned == other.taskAssigned;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(technician, period, taskAssigned);
+    }
+*/
 }

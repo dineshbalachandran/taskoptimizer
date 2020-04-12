@@ -3,5 +3,6 @@
   "skills": {"1": 1.0, "2": 1.0},
   "location": 1,
   "capacities": {"1": 10, "2": 10},
-  "tokens": [-1, 1, 2]
+  "tokens": [-1, 1, 2],
+  "cost": 0
 }]

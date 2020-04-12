@@ -20,7 +20,7 @@ public class TaskAssignment implements Serializable {
     public Technician technician = null;
 
     //period index representing the start period of the task
-    public Integer start;
+    public Integer start = null;
 
     //value representing no of time slots or durations within a period of time (number of hours in a day for e.g.)
     int durationsPerPeriod;
@@ -85,13 +85,16 @@ public class TaskAssignment implements Serializable {
     }
 
     public Integer getDuration() {
-        if (technician == null)
-            return task.duration;
+        int duration = 0;
+        if (technician == null) {
+            duration = task.duration;
+        } else if (!technician.skills.containsKey(task.skill)) {
+            duration =  task.duration * 2; // takes a lot more time if the skill does not match
+        } else {
+            duration = Math.round(task.duration * technician.skills.get(task.skill));
+        }
 
-        if (!technician.skills.containsKey(task.skill))
-            return task.duration * 2; // takes a lot more time if the skill does not match
-        else
-            return Math.round(task.duration * technician.skills.get(task.skill));
+        return duration;
     }
 
     public int getStartDeviation() { return start != null ? task.latestStart - start : -1; }
@@ -112,25 +115,17 @@ public class TaskAssignment implements Serializable {
         return ValueRangeFactory.createIntValueRange(task.earliestStart, task.latestStart + timeTolerance + 1);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean deepEquals(TaskAssignment other) {
+        if (this == other) {
             return true;
         }
 
-        if (o == null || getClass() != o.getClass()) {
+        if (other == null ) {
             return false;
         }
 
-        final TaskAssignment other = (TaskAssignment) o;
-
-        return  Objects.equals(start, other.start) &&
-                Objects.equals(technician, other.technician) &&
-                Objects.equals(task, other.task);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(task, technician, start);
+        return  task.id == other.task.id &&
+                technician.id == other.technician.id &&
+                Objects.equals(start, other.start);
     }
 }

@@ -27,7 +27,6 @@ rule "period"
         }
 end
 
-
 // Introduce TechnicianPeriod to score efficiently
 rule "BootstrapTechnicianPeriod"
     salience 3
@@ -39,11 +38,11 @@ rule "BootstrapTechnicianPeriod"
         insertLogical(new TechnicianPeriod($technician, $periodFrom - 1, java.util.Collections.EMPTY_LIST, null));
 end
 
-
 rule "TechnicianPeriod"
     salience 2
     when
-        PeriodWrapper($period : period);
+        TaskAssignSchedule($periodFrom : periodFrom)
+        PeriodWrapper($period : period, period >= $periodFrom);
         $technician : Technician()
         $taskAssignments : ArrayList() from collect (
             TaskAssignment(technician == $technician, start == $period)
@@ -56,7 +55,6 @@ end
 // ############################################################################
 // Hard constraints
 // ############################################################################
-
 rule "skill"
     when
         TaskAssignment(matchingSkill == false)
@@ -85,13 +83,46 @@ rule "technicianLocation"
         scoreHolder.addHardConstraintMatch(kcontext, -$noOfTaskLocations + 1);
 end
 
+
 // ############################################################################
 // Soft constraints
 // ############################################################################
-
-rule "onTimeStartDeviation"
+rule "technicianCost"
     when
-        TaskAssignSchedule($optControlParameters : optControlParameters)
+       TechnicianPeriod($technician : technician, noOfTaskLocations > 0)
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext, -$technician.cost);
+end
+
+rule "technicianRelocation"
+    when
+        TaskAssignSchedule($optControlParameters : optControlParameters, optControlParameters.technicianRelocation > 0)
+        TechnicianPeriod($location: location, $technician : technician, $period : period)
+        exists TechnicianPeriod(technician == $technician, period == $period + 1, location != $location, noOfTaskLocations == 1)
+        accumulate(
+            TechnicianPeriod(technician == $technician, period == $period + 1, location != $location, noOfTaskLocations == 1);
+            $relocations : count(1)
+         )
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext, -$optControlParameters.technicianRelocation * $relocations);
+end
+
+rule "technicianUtilization"
+    when
+        TaskAssignSchedule($optControlParameters : optControlParameters, optControlParameters.technicianUtilization > 0)
+        $technician : Technician($totalCapacity : totalCapacity)
+        accumulate(
+            TaskAssignment(technician == $technician, $duration : duration);
+            $capacityUsed : sum(1.0 * $duration)
+        )
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext,
+                        -$optControlParameters.technicianUtilization * Math.round(10 * (1.0 - $capacityUsed / $totalCapacity)));
+end
+
+rule "startDeviation"
+    when
+        TaskAssignSchedule($optControlParameters : optControlParameters, optControlParameters.onTimeStart > 0)
         accumulate(
             $taskAssignment : TaskAssignment($task: task, startDeviation < 0);
             $onTimeStartDeviation : sum($taskAssignment.getFactoredStartDeviation($optControlParameters.getTaskPriorityFactor($task.priority)))
@@ -100,39 +131,13 @@ rule "onTimeStartDeviation"
         scoreHolder.addSoftConstraintMatch(kcontext, $optControlParameters.onTimeStart * $onTimeStartDeviation);
 end
 
-rule "onTimeEndDeviation"
+rule "endDeviation"
     when
-        TaskAssignSchedule($optControlParameters : optControlParameters, $durationsPerPeriod : durationsPerPeriod)
+        TaskAssignSchedule($optControlParameters : optControlParameters, $durationsPerPeriod : durationsPerPeriod, optControlParameters.onTimeComplete > 0)
         accumulate(
             $taskAssignment : TaskAssignment($task: task, endDeviation < 0);
             $onTimeEndDeviation : sum($taskAssignment.getFactoredEndDeviation($optControlParameters.getTaskPriorityFactor($task.priority)))
-         )
+        )
     then
         scoreHolder.addSoftConstraintMatch(kcontext, $optControlParameters.onTimeComplete * $onTimeEndDeviation);
-end
-
-rule "technicianUtilization"
-    when
-        TaskAssignSchedule($optControlParameters : optControlParameters)
-        $technician : Technician($totalCapacity : totalCapacity)
-        accumulate(
-            $taskAssignment : TaskAssignment(technician == $technician, $duration : duration);
-            $capacityUsed : sum($duration)
-         )
-    then
-        scoreHolder.addSoftConstraintMatch(kcontext,
-                        $optControlParameters.technicianUtilization * Math.round(10 * $capacityUsed / $totalCapacity));
-end
-
-rule "technicianRelocation"
-    when
-        TaskAssignSchedule($optControlParameters : optControlParameters)
-        TechnicianPeriod($location: location, $technician : technician, $period : period)
-        exists TechnicianPeriod(technician == $technician, period == $period + 1, location != $location, noOfTaskLocations == 1)
-        accumulate(
-            TechnicianPeriod(technician == $technician, period == $period + 1, location != $location, noOfTaskLocations == 1);
-            $relocations : count(1)
-         )
-    then
-        scoreHolder.addSoftConstraintMatch(kcontext, $optControlParameters.technicianRelocation * $relocations);
 end

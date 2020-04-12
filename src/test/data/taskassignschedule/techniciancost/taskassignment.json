@@ -1,0 +1,10 @@
+[{
+  "task": {"id": 1},
+  "technician": {"id": 3},
+  "start": 1
+},
+{
+  "task": {"id": 2},
+  "technician": {"id": 3},
+  "start": 1
+}]

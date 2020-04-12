@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <solver>
+    <environmentMode>REPRODUCIBLE</environmentMode>
     <!-- Domain model configuration -->
     <solutionClass>com.infosys.taskoptimizer.taskassignschedule.TaskAssignSchedule</solutionClass>
     <entityClass>com.infosys.taskoptimizer.taskassignschedule.domain.TaskAssignment</entityClass>
@@ -7,12 +8,26 @@
     <!-- Score configuration -->
     <scoreDirectorFactory>
         <scoreDrl>com/infosys/taskoptimizer/taskassignschedule/solver/taskAssignScheduleScoreRules.drl</scoreDrl>
-        <initializingScoreTrend>ONLY_DOWN</initializingScoreTrend>
+        <initializingScoreTrend>ANY</initializingScoreTrend>
     </scoreDirectorFactory>
 
     <!-- Optimization algorithms configuration -->
     <termination>
-        <secondsSpentLimit>10</secondsSpentLimit>
+        <secondsSpentLimit>30</secondsSpentLimit>
         <!--<minutesSpentLimit>1</minutesSpentLimit>-->
     </termination>
+    <!--<constructionHeuristic>
+        <constructionHeuristicType>FIRST_FIT_DECREASING</constructionHeuristicType>
+        <forager>
+            <pickEarlyType>FIRST_FEASIBLE_SCORE_OR_NON_DETERIORATING_HARD</pickEarlyType>
+        </forager>
+    </constructionHeuristic>
+    <localSearch>
+        <acceptor>
+            <lateAcceptanceSize>400</lateAcceptanceSize>
+        </acceptor>
+        <forager>
+            <acceptedCountLimit>1</acceptedCountLimit>
+        </forager>
+    </localSearch>-->
 </solver>

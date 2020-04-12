@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TaskAssignScheduleTest {
 
@@ -36,7 +37,13 @@ public class TaskAssignScheduleTest {
         System.out.println(TaskAssignScheduleApp.outputString(solved, durationsPerPeriod));
 
         assertEquals(score, solved.score);
-        assertEquals(loadSolution(taskassignmentfile), solved.taskAssignments);
+
+        List<TaskAssignment> expectedAssignments = loadSolution(taskassignmentfile);
+        assertEquals(expectedAssignments.size(), solved.taskAssignments.size());
+
+        for (int i = 0; i < expectedAssignments.size(); i++) {
+            assertTrue(expectedAssignments.get(i).deepEquals(solved.taskAssignments.get(i)));
+        }
     }
 
     private static Triplet<List<Task>, List<Technician>, OptControlParameters>
@@ -214,7 +221,7 @@ public class TaskAssignScheduleTest {
         int durationsPerPeriod = 5;
 
         String taskassignmentfile = "./src/test/data/taskassignschedule/techutilizationcost/taskassignment.json";
-        HardSoftLongScore score = HardSoftLongScore.of(0, 2);
+        HardSoftLongScore score = HardSoftLongScore.of(0, -8);
 
         executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo, durationsPerPeriod, taskassignmentfile, score);
     }
@@ -254,6 +261,24 @@ public class TaskAssignScheduleTest {
 
         String taskassignmentfile = "./src/test/data/taskassignschedule/ontimecompletecost/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(0, -1);
+
+        executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo, durationsPerPeriod, taskassignmentfile, score);
+    }
+
+    /*
+     A test with one task and two technicians. The task should be assigned to the lower cost technician.
+     */
+    @Test
+    public void testTechnicianCost() throws Exception {
+        String taskfile = "./src/test/data/taskassignschedule/techniciancost/tasks.json";
+        String technicianfile = "./src/test/data/taskassignschedule/techniciancost/technicians.json";
+        String controlfile = "./src/test/data/taskassignschedule/techniciancost/optcontrolparameters.json";
+        int periodFrom = 1;
+        int periodTo = 7;
+        int durationsPerPeriod = 5;
+
+        String taskassignmentfile = "./src/test/data/taskassignschedule/techniciancost/taskassignment.json";
+        HardSoftLongScore score = HardSoftLongScore.of(0, -2);
 
         executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo, durationsPerPeriod, taskassignmentfile, score);
     }
