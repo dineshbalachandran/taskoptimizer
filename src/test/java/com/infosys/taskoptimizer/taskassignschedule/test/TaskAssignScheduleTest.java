@@ -208,25 +208,6 @@ public class TaskAssignScheduleTest {
     }
 
     /*
-     A test with two tasks and one technician, with the capacity not fully utilized.
-     This should trigger the technician utilization soft constraint score.
-     */
-    @Test
-    public void testTechUtilizationCost() throws Exception {
-        String taskfile = "./src/test/data/taskassignschedule/techutilizationcost/tasks.json";
-        String technicianfile = "./src/test/data/taskassignschedule/techutilizationcost/technicians.json";
-        String controlfile = "./src/test/data/taskassignschedule/techutilizationcost/optcontrolparameters.json";
-        int periodFrom = 1;
-        int periodTo = 7;
-        int durationsPerPeriod = 5;
-
-        String taskassignmentfile = "./src/test/data/taskassignschedule/techutilizationcost/taskassignment.json";
-        HardSoftLongScore score = HardSoftLongScore.of(0, -8);
-
-        executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo, durationsPerPeriod, taskassignmentfile, score);
-    }
-
-    /*
      A test with two tasks and one technician, with the latest start date not met for one of the tasks.
      This should trigger the on time start soft constraint score.
      */

@@ -85,7 +85,7 @@ public class TaskAssignment implements Serializable {
     }
 
     public Integer getDuration() {
-        int duration = 0;
+        int duration;
         if (technician == null) {
             duration = task.duration;
         } else if (!technician.skills.containsKey(task.skill)) {
@@ -97,13 +97,13 @@ public class TaskAssignment implements Serializable {
         return duration;
     }
 
-    public int getStartDeviation() { return start != null ? task.latestStart - start : -1; }
+    public int getStartDeviation() { return start != null ? task.latestStart - start : -task.duration; }
 
     public int getFactoredStartDeviation(int factor) { return factor * getStartDeviation();
     }
 
     public int getEndDeviation() {
-        return getEnd() != null ? task.latestEnd - getEnd() : -1;
+        return getEnd() != null ? task.latestEnd - getEnd() : -task.duration;
     }
 
     public int getFactoredEndDeviation(int factor) {

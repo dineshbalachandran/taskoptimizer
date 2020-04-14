@@ -1,8 +1,7 @@
 {
-  "onTimeStart": 10,
-  "onTimeComplete": 0,
-  "technicianUtilization": 0,
-  "technicianRelocation": 1,
+  "startDeviationCost": 10,
+  "endDeviationCost": 0,
+  "relocationCost": 1,
   "taskPriorityFactors": {"1": 1, "2": 1},
   "timeTolerance": 0
 }
