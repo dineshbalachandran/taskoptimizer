@@ -11,6 +11,9 @@ import java.util.List;
 
 public class TaskAssignScheduleApp {
 
+    private static SolverFactory<TaskAssignSchedule> solverFactory = SolverFactory.createFromXmlResource(
+            "com/infosys/taskoptimizer/taskassignschedule/solver/taskAssignScheduleSolverConfig.xml");
+
     public static TaskAssignSchedule solve(List<Task> tasks,
                                            List<Technician> technicians,
                                            OptControlParameters optControlParameters,
@@ -18,15 +21,10 @@ public class TaskAssignScheduleApp {
                                            int periodTo,
                                            int durationsPerPeriod) {
 
-        SolverFactory<TaskAssignSchedule> solverFactory = SolverFactory.createFromXmlResource(
-                "com/infosys/taskoptimizer/taskassignschedule/solver/taskAssignScheduleSolverConfig.xml");
-        Solver<TaskAssignSchedule> solver = solverFactory.buildSolver();
+        TaskAssignSchedule problem = new TaskAssignSchedule(tasks, technicians, optControlParameters,
+                                                            periodFrom, periodTo, durationsPerPeriod);
 
-        TaskAssignSchedule problem = new TaskAssignSchedule(tasks, technicians, optControlParameters, periodFrom, periodTo, durationsPerPeriod);
-
-        TaskAssignSchedule solution = solver.solve(problem);
-
-        return solution;
+        return solverFactory.buildSolver().solve(problem);
     }
 
     public static String outputString(TaskAssignSchedule taskAssignSchedule, int durationsPerPeriod) {

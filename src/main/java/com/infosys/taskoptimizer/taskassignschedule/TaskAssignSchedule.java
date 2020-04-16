@@ -10,7 +10,7 @@ import org.optaplanner.core.api.domain.solution.PlanningSolution;
 import org.optaplanner.core.api.domain.solution.drools.ProblemFactCollectionProperty;
 import org.optaplanner.core.api.domain.solution.drools.ProblemFactProperty;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
-import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScore;
+import org.optaplanner.core.api.score.buildin.hardmediumsoftlong.HardMediumSoftLongScore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class TaskAssignSchedule {
 
     public List<TaskAssignment> taskAssignments;
 
-    public HardSoftLongScore score;
+    public HardMediumSoftLongScore score;
 
     public TaskAssignSchedule(List<Task> tasks,
                               List<Technician> technicians,
@@ -51,7 +51,7 @@ public class TaskAssignSchedule {
         addTasks(tasks);
     }
 
-    public TaskAssignSchedule() {};
+    public TaskAssignSchedule() {}
 
     public OptControlParameters getOptControlParameters() {
         return optControlParameters;
@@ -86,11 +86,11 @@ public class TaskAssignSchedule {
     }
 
     @PlanningScore
-    public HardSoftLongScore getScore() {
+    public HardMediumSoftLongScore getScore() {
         return score;
     }
 
-    public void setScore(HardSoftLongScore score) {
+    public void setScore(HardMediumSoftLongScore score) {
         this.score = score;
     }
 

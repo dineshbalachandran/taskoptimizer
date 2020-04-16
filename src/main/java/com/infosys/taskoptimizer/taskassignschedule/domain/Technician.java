@@ -28,11 +28,12 @@ public class Technician implements Serializable {
 
     private int totalCapacity;
 
-    public Technician() {};
+    public Technician() {}
 
     public Technician(int id,
                       Map<Integer, Float> skills,
-                      int location, Map<Integer, Integer> capacities,
+                      int location,
+                      Map<Integer, Integer> capacities,
                       Set<Integer> tokens,
                       int cost) {
         this.id = id;

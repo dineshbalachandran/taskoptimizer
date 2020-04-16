@@ -4,7 +4,7 @@ package com.infosys.taskoptimizer.taskassignschedule.solver;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScoreHolder;
+import org.optaplanner.core.api.score.buildin.hardmediumsoftlong.HardMediumSoftLongScoreHolder;
 
 import com.infosys.taskoptimizer.taskassignschedule.domain.TaskAssignment;
 import com.infosys.taskoptimizer.taskassignschedule.domain.Task;
@@ -14,7 +14,7 @@ import com.infosys.taskoptimizer.taskassignschedule.drools.PeriodWrapper;
 import com.infosys.taskoptimizer.taskassignschedule.drools.TechnicianPeriod;
 import com.infosys.taskoptimizer.taskassignschedule.TaskAssignSchedule;
 
-global HardSoftLongScoreHolder scoreHolder;
+global HardMediumSoftLongScoreHolder scoreHolder;
 
 // Setup
 rule "period"
@@ -85,15 +85,18 @@ end
 
 
 // ############################################################################
-// Soft constraints
+// Medium constraints
 // ############################################################################
 rule "technicianCost"
     when
        TechnicianPeriod($technician : technician, noOfTaskLocations > 0)
     then
-        scoreHolder.addSoftConstraintMatch(kcontext, -$technician.cost);
+        scoreHolder.addMediumConstraintMatch(kcontext, -$technician.cost);
 end
 
+// ############################################################################
+// Soft constraints
+// ############################################################################
 rule "relocationCost"
     when
         TaskAssignSchedule($optControlParameters : optControlParameters, optControlParameters.relocationCost > 0)
