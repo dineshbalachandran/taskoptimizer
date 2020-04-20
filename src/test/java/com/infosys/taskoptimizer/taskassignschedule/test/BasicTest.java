@@ -1,7 +1,7 @@
 package com.infosys.taskoptimizer.taskassignschedule.test;
 
 import org.junit.Test;
-import org.optaplanner.core.api.score.buildin.hardmediumsoftlong.HardMediumSoftLongScore;
+import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScore;
 
 public class BasicTest {
 
@@ -20,9 +20,9 @@ public class BasicTest {
         int durationsPerPeriod = 5;
 
         String taskassignmentfile = basePath + "/simplematch/taskassignment.json";
-        HardMediumSoftLongScore score = HardMediumSoftLongScore.of(0, 0, 0);
+        HardSoftLongScore score = HardSoftLongScore.of(0, 0);
 
-        Utility.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -39,9 +39,9 @@ public class BasicTest {
         int durationsPerPeriod = 5;
 
         String taskassignmentfile = basePath + "/skillnomatch/taskassignment.json";
-        HardMediumSoftLongScore score = HardMediumSoftLongScore.of(-2, 0, 0);
+        HardSoftLongScore score = HardSoftLongScore.of(-2, 0);
 
-        Utility.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -58,9 +58,9 @@ public class BasicTest {
         int durationsPerPeriod = 5;
 
         String taskassignmentfile = basePath + "/tokennomatch/taskassignment.json";
-        HardMediumSoftLongScore score = HardMediumSoftLongScore.of(-1, 0, 0);
+        HardSoftLongScore score = HardSoftLongScore.of(-1, 0);
 
-        Utility.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -79,9 +79,9 @@ public class BasicTest {
         int durationsPerPeriod = 5;
 
         String taskassignmentfile = basePath + "/techlocationnotmet/taskassignment.json";
-        HardMediumSoftLongScore score = HardMediumSoftLongScore.of(-1, 0, 0);
+        HardSoftLongScore score = HardSoftLongScore.of(-1, 0);
 
-        Utility.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -103,9 +103,9 @@ public class BasicTest {
         int durationsPerPeriod = 5;
 
         String taskassignmentfile = basePath + "/startshiftforlocation/taskassignment.json";
-        HardMediumSoftLongScore score = HardMediumSoftLongScore.of(0, -1, 0);
+        HardSoftLongScore score = HardSoftLongScore.of(0, -1);
 
-        Utility.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -123,9 +123,9 @@ public class BasicTest {
         int durationsPerPeriod = 5;
 
         String taskassignmentfile = basePath + "/techcapacitynotmet/taskassignment.json";
-        HardMediumSoftLongScore score = HardMediumSoftLongScore.of(-5, 0, 0);
+        HardSoftLongScore score = HardSoftLongScore.of(-5, 0);
 
-        Utility.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -146,9 +146,9 @@ public class BasicTest {
         int durationsPerPeriod = 5;
 
         String taskassignmentfile = basePath + "/startshiftforcapacity/taskassignment.json";
-        HardMediumSoftLongScore score = HardMediumSoftLongScore.of(0, 0, 0);
+        HardSoftLongScore score = HardSoftLongScore.of(0, 0);
 
-        Utility.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -166,9 +166,9 @@ public class BasicTest {
         int durationsPerPeriod = 5;
 
         String taskassignmentfile = basePath + "/ontimestartcost/taskassignment.json";
-        HardMediumSoftLongScore score = HardMediumSoftLongScore.of(0, 0, -1);
+        HardSoftLongScore score = HardSoftLongScore.of(0, -1);
 
-        Utility.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -186,9 +186,9 @@ public class BasicTest {
         int durationsPerPeriod = 5;
 
         String taskassignmentfile = basePath + "/ontimecompletecost/taskassignment.json";
-        HardMediumSoftLongScore score = HardMediumSoftLongScore.of(0, 0, -1);
+        HardSoftLongScore score = HardSoftLongScore.of(0, -1);
 
-        Utility.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -206,10 +206,9 @@ public class BasicTest {
         int durationsPerPeriod = 5;
 
         String taskassignmentfile = basePath + "le/techniciancost/taskassignment.json";
-        HardMediumSoftLongScore score = HardMediumSoftLongScore.of(0, -2, 0);
+        HardSoftLongScore score = HardSoftLongScore.of(0, -2);
 
-        Utility.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
-
 }

@@ -110,6 +110,7 @@ public class TaskAssignment implements Serializable {
         return factor * getEndDeviation();
     }
 
+    //TODO: range should be limited to periodTo, add this check
     @ValueRangeProvider(id = "startRange")
     public CountableValueRange<Integer> getStartPeriodRange() {
         return ValueRangeFactory.createIntValueRange(task.earliestStart, task.latestStart + timeTolerance + 1);

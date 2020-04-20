@@ -8,7 +8,7 @@ import com.infosys.taskoptimizer.taskassignschedule.domain.Task;
 import com.infosys.taskoptimizer.taskassignschedule.domain.TaskAssignment;
 import com.infosys.taskoptimizer.taskassignschedule.domain.Technician;
 import org.javatuples.Triplet;
-import org.optaplanner.core.api.score.buildin.hardmediumsoftlong.HardMediumSoftLongScore;
+import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScore;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,13 +19,13 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class Utility {
+public class TestUtil {
 
-    private Utility() {}
+    private TestUtil() {}
 
     public static void executeTest(String taskfile, String technicianfile, String controlfile,
                              int periodFrom, int periodTo, int durationsPerPeriod,
-                             String taskassignmentfile, HardMediumSoftLongScore score)
+                             String taskassignmentfile, HardSoftLongScore score)
             throws IOException {
 
         Triplet<List<Task>, List<Technician>, OptControlParameters> input =

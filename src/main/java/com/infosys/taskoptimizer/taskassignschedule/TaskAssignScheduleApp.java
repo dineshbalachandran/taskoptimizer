@@ -4,7 +4,6 @@ import com.infosys.taskoptimizer.taskassignschedule.domain.OptControlParameters;
 import com.infosys.taskoptimizer.taskassignschedule.domain.Task;
 import com.infosys.taskoptimizer.taskassignschedule.domain.TaskAssignment;
 import com.infosys.taskoptimizer.taskassignschedule.domain.Technician;
-import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.api.solver.SolverFactory;
 
 import java.util.List;
@@ -37,7 +36,9 @@ public class TaskAssignScheduleApp {
                 .append("Planned start").append(" -> ")
                 .append("Required start").append(" : ")
                 .append("Planned end").append(" -> ")
-                .append("Latest end")
+                .append("Latest end").append(" -> ").append(" : ")
+                .append("Task Location").append(" -> ")
+                .append("Tech Location")
                 .append("\n");
         for (TaskAssignment taskAssignment : taskAssignSchedule.getTaskAssignments()) {
             Task task = taskAssignment.task;
@@ -47,7 +48,9 @@ public class TaskAssignScheduleApp {
                     .append(taskAssignment.start).append(" -> ")
                     .append(task.latestStart).append(" : ")
                     .append(taskAssignment.getEnd()).append(" -> ")
-                    .append(task.latestEnd)
+                    .append(task.latestEnd).append(" : ")
+                    .append(task.location).append(" -> ")
+                    .append(technician == null ? null : technician.location)
                     .append("\n");
         }
         return displayString.toString();

@@ -1,0 +1,50 @@
+[{
+  "id" : 1,
+  "priority" : 3,
+  "skill": 1,
+  "location": 2,
+  "earliestStart": 2,
+  "latestStart": 2,
+  "duration": 10,
+  "latestEnd": 7
+},
+{
+  "id" : 2,
+  "priority" : 2,
+  "skill": 2,
+  "location": 1,
+  "earliestStart": 1,
+  "latestStart": 1,
+  "duration": 4,
+  "latestEnd": 7
+},
+{
+  "id" : 3,
+  "priority" : 3,
+  "skill": 1,
+  "location": 3,
+  "earliestStart": 3,
+  "latestStart": 3,
+  "duration": 5,
+  "latestEnd": 7
+},
+{
+  "id" : 4,
+  "priority" : 1,
+  "skill": 2,
+  "location": 3,
+  "earliestStart": 2,
+  "latestStart": 2,
+  "duration": 1,
+  "latestEnd": 7
+},
+{
+  "id" : 5,
+  "priority" : 3,
+  "skill": 3,
+  "location": 1,
+  "earliestStart": 1,
+  "latestStart": 1,
+  "duration": 1,
+  "latestEnd": 7
+}]

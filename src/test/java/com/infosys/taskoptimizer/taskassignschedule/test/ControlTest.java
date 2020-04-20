@@ -1,7 +1,7 @@
 package com.infosys.taskoptimizer.taskassignschedule.test;
 
 import org.junit.Test;
-import org.optaplanner.core.api.score.buildin.hardmediumsoftlong.HardMediumSoftLongScore;
+import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScore;
 
 public class ControlTest {
 
@@ -20,9 +20,27 @@ public class ControlTest {
         int durationsPerPeriod = 5;
 
         String taskassignmentfile = basePath + "/tc1/taskassignment.json";
-        HardMediumSoftLongScore score = HardMediumSoftLongScore.of(0, -5, 0);
+        HardSoftLongScore score = HardSoftLongScore.of(0, -5);
 
-        Utility.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo, durationsPerPeriod, taskassignmentfile, score);
+        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo, durationsPerPeriod, taskassignmentfile, score);
+    }
+
+    /*
+    No cost for missed start with a high cost for relocation
+     */
+    @Test
+    public void testControlTestCase2() throws Exception {
+        String taskfile = basePath + "/tc2/tasks.json";
+        String technicianfile = basePath + "/tc2/technicians.json";
+        String controlfile = basePath + "/tc2/optcontrolparameters.json";
+        int periodFrom = 1;
+        int periodTo = 7;
+        int durationsPerPeriod = 5;
+
+        String taskassignmentfile = basePath + "/tc2/taskassignment.json";
+        HardSoftLongScore score = HardSoftLongScore.of(0, -106);
+
+        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo, durationsPerPeriod, taskassignmentfile, score);
     }
 
 }
