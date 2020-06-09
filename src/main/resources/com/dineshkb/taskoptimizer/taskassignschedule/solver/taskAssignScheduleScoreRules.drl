@@ -1,4 +1,4 @@
-package com.infosys.taskoptimizer.taskassignschedule.solver;
+package com.dineshkb.taskoptimizer.taskassignschedule.solver;
     dialect "java"
 
 import java.util.List;
@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScoreHolder;
 
-import com.infosys.taskoptimizer.taskassignschedule.domain.TaskAssignment;
-import com.infosys.taskoptimizer.taskassignschedule.domain.Task;
-import com.infosys.taskoptimizer.taskassignschedule.domain.Technician;
-import com.infosys.taskoptimizer.taskassignschedule.domain.OptControlParameters;
-import com.infosys.taskoptimizer.taskassignschedule.drools.PeriodWrapper;
-import com.infosys.taskoptimizer.taskassignschedule.drools.TechnicianPeriod;
-import com.infosys.taskoptimizer.taskassignschedule.TaskAssignSchedule;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.TaskAssignment;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.Task;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.Technician;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.OptControlParameters;
+import com.dineshkb.taskoptimizer.taskassignschedule.drools.PeriodWrapper;
+import com.dineshkb.taskoptimizer.taskassignschedule.drools.TechnicianPeriod;
+import com.dineshkb.taskoptimizer.taskassignschedule.TaskAssignSchedule;
 
 global HardSoftLongScoreHolder scoreHolder;
 

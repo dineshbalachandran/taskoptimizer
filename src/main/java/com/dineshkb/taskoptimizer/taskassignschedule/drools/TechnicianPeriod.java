@@ -1,7 +1,7 @@
-package com.infosys.taskoptimizer.taskassignschedule.drools;
+package com.dineshkb.taskoptimizer.taskassignschedule.drools;
 
-import com.infosys.taskoptimizer.taskassignschedule.domain.TaskAssignment;
-import com.infosys.taskoptimizer.taskassignschedule.domain.Technician;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.TaskAssignment;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.Technician;
 
 import java.util.Comparator;
 import java.util.HashSet;

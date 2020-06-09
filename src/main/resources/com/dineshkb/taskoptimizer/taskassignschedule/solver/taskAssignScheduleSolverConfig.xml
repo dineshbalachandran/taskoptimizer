@@ -2,12 +2,12 @@
 <solver>
     <environmentMode>REPRODUCIBLE</environmentMode>
     <!-- Domain model configuration -->
-    <solutionClass>com.infosys.taskoptimizer.taskassignschedule.TaskAssignSchedule</solutionClass>
-    <entityClass>com.infosys.taskoptimizer.taskassignschedule.domain.TaskAssignment</entityClass>
+    <solutionClass>com.dineshkb.taskoptimizer.taskassignschedule.TaskAssignSchedule</solutionClass>
+    <entityClass>com.dineshkb.taskoptimizer.taskassignschedule.domain.TaskAssignment</entityClass>
 
     <!-- Score configuration -->
     <scoreDirectorFactory>
-        <scoreDrl>com/infosys/taskoptimizer/taskassignschedule/solver/taskAssignScheduleScoreRules.drl</scoreDrl>
+        <scoreDrl>com/dineshkb/taskoptimizer/taskassignschedule/solver/taskAssignScheduleScoreRules.drl</scoreDrl>
         <initializingScoreTrend>ANY</initializingScoreTrend>
     </scoreDirectorFactory>
 

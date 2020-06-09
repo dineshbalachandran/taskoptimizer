@@ -1,9 +1,9 @@
-package com.infosys.taskoptimizer.taskassignschedule;
+package com.dineshkb.taskoptimizer.taskassignschedule;
 
-import com.infosys.taskoptimizer.taskassignschedule.domain.OptControlParameters;
-import com.infosys.taskoptimizer.taskassignschedule.domain.Task;
-import com.infosys.taskoptimizer.taskassignschedule.domain.TaskAssignment;
-import com.infosys.taskoptimizer.taskassignschedule.domain.Technician;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.OptControlParameters;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.Task;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.Technician;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.TaskAssignment;
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.solution.PlanningScore;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;

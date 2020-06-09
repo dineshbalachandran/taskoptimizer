@@ -1,12 +1,12 @@
-package com.infosys.taskoptimizer.taskassignschedule.test;
+package com.dineshkb.taskoptimizer.taskassignschedule.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infosys.taskoptimizer.taskassignschedule.TaskAssignSchedule;
-import com.infosys.taskoptimizer.taskassignschedule.TaskAssignScheduleApp;
-import com.infosys.taskoptimizer.taskassignschedule.domain.OptControlParameters;
-import com.infosys.taskoptimizer.taskassignschedule.domain.Task;
-import com.infosys.taskoptimizer.taskassignschedule.domain.TaskAssignment;
-import com.infosys.taskoptimizer.taskassignschedule.domain.Technician;
+import com.dineshkb.taskoptimizer.taskassignschedule.TaskAssignSchedule;
+import com.dineshkb.taskoptimizer.taskassignschedule.TaskAssignScheduleApp;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.OptControlParameters;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.Task;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.TaskAssignment;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.Technician;
 import org.javatuples.Triplet;
 import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScore;
 

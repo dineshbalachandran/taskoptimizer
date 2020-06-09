@@ -1,4 +1,4 @@
-package com.infosys.taskoptimizer.taskassignschedule.drools;
+package com.dineshkb.taskoptimizer.taskassignschedule.drools;
 
 import java.util.Comparator;
 import java.util.Objects;

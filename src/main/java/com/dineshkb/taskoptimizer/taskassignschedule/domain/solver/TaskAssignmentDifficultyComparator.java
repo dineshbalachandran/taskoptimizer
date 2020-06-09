@@ -1,7 +1,7 @@
-package com.infosys.taskoptimizer.taskassignschedule.domain.solver;
+package com.dineshkb.taskoptimizer.taskassignschedule.domain.solver;
 
-import com.infosys.taskoptimizer.taskassignschedule.domain.Task;
-import com.infosys.taskoptimizer.taskassignschedule.domain.TaskAssignment;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.Task;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.TaskAssignment;
 
 import java.io.Serializable;
 import java.util.Comparator;

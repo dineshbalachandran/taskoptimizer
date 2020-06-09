@@ -1,4 +1,4 @@
-package com.infosys.taskoptimizer.taskassignschedule.domain;
+package com.dineshkb.taskoptimizer.taskassignschedule.domain;
 
 import java.util.Map;
 

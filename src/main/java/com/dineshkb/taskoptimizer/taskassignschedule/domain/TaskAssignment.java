@@ -1,6 +1,6 @@
-package com.infosys.taskoptimizer.taskassignschedule.domain;
+package com.dineshkb.taskoptimizer.taskassignschedule.domain;
 
-import com.infosys.taskoptimizer.taskassignschedule.domain.solver.TaskAssignmentDifficultyComparator;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.solver.TaskAssignmentDifficultyComparator;
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
 import org.optaplanner.core.api.domain.valuerange.CountableValueRange;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeFactory;

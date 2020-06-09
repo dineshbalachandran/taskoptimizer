@@ -1,9 +1,9 @@
-package com.infosys.taskoptimizer.taskassignschedule;
+package com.dineshkb.taskoptimizer.taskassignschedule;
 
-import com.infosys.taskoptimizer.taskassignschedule.domain.OptControlParameters;
-import com.infosys.taskoptimizer.taskassignschedule.domain.Task;
-import com.infosys.taskoptimizer.taskassignschedule.domain.TaskAssignment;
-import com.infosys.taskoptimizer.taskassignschedule.domain.Technician;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.OptControlParameters;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.Task;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.TaskAssignment;
+import com.dineshkb.taskoptimizer.taskassignschedule.domain.Technician;
 import org.optaplanner.core.api.solver.SolverFactory;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 public class TaskAssignScheduleApp {
 
     private static SolverFactory<TaskAssignSchedule> solverFactory = SolverFactory.createFromXmlResource(
-            "com/infosys/taskoptimizer/taskassignschedule/solver/taskAssignScheduleSolverConfig.xml");
+            "com/dineshkb/taskoptimizer/taskassignschedule/solver/taskAssignScheduleSolverConfig.xml");
 
     public static TaskAssignSchedule solve(List<Task> tasks,
                                            List<Technician> technicians,

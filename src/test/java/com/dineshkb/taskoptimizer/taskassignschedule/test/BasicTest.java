@@ -1,4 +1,4 @@
-package com.infosys.taskoptimizer.taskassignschedule.test;
+package com.dineshkb.taskoptimizer.taskassignschedule.test;
 
 import org.junit.Test;
 import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScore;
