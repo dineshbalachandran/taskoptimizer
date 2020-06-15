@@ -22,7 +22,11 @@ public class ControlTest {
         String taskassignmentfile = basePath + "/tc1/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(0, -5);
 
-        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo, durationsPerPeriod, taskassignmentfile, score);
+        StringBuilder testDesc = new StringBuilder();
+        testDesc.append("ControlTest1: High cost for missed start, no cost for relocation");
+
+        TestUtil.executeTest(testDesc.toString(), taskfile, technicianfile, controlfile,
+                periodFrom, periodTo, durationsPerPeriod, taskassignmentfile, score);
     }
 
     /*
@@ -40,7 +44,11 @@ public class ControlTest {
         String taskassignmentfile = basePath + "/tc2/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(0, -106);
 
-        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo, durationsPerPeriod, taskassignmentfile, score);
+        StringBuilder testDesc = new StringBuilder();
+        testDesc.append("ControlTest2: No cost for missed start with a high cost for relocation");
+
+        TestUtil.executeTest(testDesc.toString(), taskfile, technicianfile, controlfile,
+                periodFrom, periodTo, durationsPerPeriod, taskassignmentfile, score);
     }
 
 }

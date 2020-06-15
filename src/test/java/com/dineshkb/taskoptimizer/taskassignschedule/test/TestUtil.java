@@ -23,7 +23,7 @@ public class TestUtil {
 
     private TestUtil() {}
 
-    public static void executeTest(String taskfile, String technicianfile, String controlfile,
+    public static void executeTest(String testDesc, String taskfile, String technicianfile, String controlfile,
                              int periodFrom, int periodTo, int durationsPerPeriod,
                              String taskassignmentfile, HardSoftLongScore score)
             throws IOException {
@@ -35,6 +35,7 @@ public class TestUtil {
                 TaskAssignScheduleApp.solve(input.getValue0(), input.getValue1(),
                         input.getValue2(), periodFrom, periodTo, durationsPerPeriod);
 
+        System.out.println(testDesc);
         System.out.println(TaskAssignScheduleApp.outputString(solved, durationsPerPeriod));
 
         assertEquals(score, solved.score);

@@ -22,8 +22,12 @@ public class BasicTest {
         String taskassignmentfile = basePath + "/simplematch/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(0, 0);
 
-        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
-                            durationsPerPeriod, taskassignmentfile, score);
+        StringBuilder testDesc = new StringBuilder();
+        testDesc.append("SimpleMatch: A Basic test with two tasks and one technician ")
+                .append("that matches all hard and soft constraints");
+
+        TestUtil.executeTest(testDesc.toString(), taskfile, technicianfile, controlfile, periodFrom, periodTo,
+                durationsPerPeriod, taskassignmentfile, score);
     }
 
     /*
@@ -41,8 +45,12 @@ public class BasicTest {
         String taskassignmentfile = basePath + "/skillnomatch/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(-2, 0);
 
-        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
-                            durationsPerPeriod, taskassignmentfile, score);
+        StringBuilder testDesc = new StringBuilder();
+        testDesc.append("SkillNoMatch: A test with two tasks and one technician ")
+                .append("that does not match the skill hard constraint on both tasks");
+
+        TestUtil.executeTest(testDesc.toString(), taskfile, technicianfile, controlfile, periodFrom, periodTo,
+                durationsPerPeriod, taskassignmentfile, score);
     }
 
     /*
@@ -60,8 +68,12 @@ public class BasicTest {
         String taskassignmentfile = basePath + "/tokennomatch/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(-1, 0);
 
-        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
-                            durationsPerPeriod, taskassignmentfile, score);
+        StringBuilder testDesc = new StringBuilder();
+        testDesc.append("TokenNoMatch: A test with two tasks and one technician ")
+                .append("where one task requires a token that the technician does not possess");
+
+        TestUtil.executeTest(testDesc.toString(), taskfile, technicianfile, controlfile, periodFrom, periodTo,
+                durationsPerPeriod, taskassignmentfile, score);
     }
 
     /*
@@ -81,13 +93,17 @@ public class BasicTest {
         String taskassignmentfile = basePath + "/techlocationnotmet/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(-1, 0);
 
-        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        StringBuilder testDesc = new StringBuilder();
+        testDesc.append("TechLocationNotMet: A test with two tasks and one technician ")
+                .append("where one task is in different location to the technician's, with different start date");
+
+        TestUtil.executeTest(testDesc.toString(), taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
     /*
     A variation of the above test (testTechLocationNotMet) with two tasks and one technician where one task is
-    in different location to the technician.  The task in the different location though has flexibility in
+    in a location different to the technician.  The task in the different location though has flexibility in
     the start date.
     This should allow the optimizer to shift the start date without breaking the hard constraint of technician
     not being present in the different locations within the same period.
@@ -105,8 +121,13 @@ public class BasicTest {
         String taskassignmentfile = basePath + "/startshiftforlocation/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(0, -1);
 
-        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
-                            durationsPerPeriod, taskassignmentfile, score);
+        StringBuilder testDesc = new StringBuilder();
+        testDesc.append("StartShiftForLocation: A test with two tasks and one technician ")
+                .append("where one task is in different location to the technician's, ")
+                .append("with different start date with flexibility to shift start date");
+
+        TestUtil.executeTest(testDesc.toString(), taskfile, technicianfile, controlfile, periodFrom, periodTo,
+                durationsPerPeriod, taskassignmentfile, score);
     }
 
     /*
@@ -125,7 +146,12 @@ public class BasicTest {
         String taskassignmentfile = basePath + "/techcapacitynotmet/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(-5, 0);
 
-        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        StringBuilder testDesc = new StringBuilder();
+        testDesc.append("TechCapacityNotMet: A test with two tasks and one technician. ")
+                .append("Tasks starting on same date requiring capacity more than the technician ")
+                .append("capacity leading to breaking the tech capacity hard constraint within a period.");
+
+        TestUtil.executeTest(testDesc.toString(), taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -148,7 +174,12 @@ public class BasicTest {
         String taskassignmentfile = basePath + "/startshiftforcapacity/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(0, 0);
 
-        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        StringBuilder testDesc = new StringBuilder();
+        testDesc.append("StartShiftForCapacity: A test with two tasks and one technician. ")
+                .append("Tasks starting on same date requiring capacity more than the technician ")
+                .append("capacity. One of the tasks though has flexibility in the start date.");
+
+        TestUtil.executeTest(testDesc.toString(), taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -168,7 +199,11 @@ public class BasicTest {
         String taskassignmentfile = basePath + "/ontimestartcost/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(0, -1);
 
-        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        StringBuilder testDesc = new StringBuilder();
+        testDesc.append("OnTimeStartCost:  A test with two tasks and one technician, ")
+                .append("with the latest start date not met for one of the tasks");
+
+        TestUtil.executeTest(testDesc.toString(), taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -188,7 +223,11 @@ public class BasicTest {
         String taskassignmentfile = basePath + "/ontimecompletecost/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(0, -1);
 
-        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        StringBuilder testDesc = new StringBuilder();
+        testDesc.append("OnTimeCompleteCost:  A test with two tasks and one technician, ")
+                .append("with the latest end date not met for one of the tasks");
+
+        TestUtil.executeTest(testDesc.toString(), taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 
@@ -200,15 +239,19 @@ public class BasicTest {
     public void testTechnicianCost() throws Exception {
         String taskfile = basePath + "/techniciancost/tasks.json";
         String technicianfile = basePath + "/techniciancost/technicians.json";
-        String controlfile = "basePath + \"/techniciancost/optcontrolparameters.json";
+        String controlfile = basePath + "/techniciancost/optcontrolparameters.json";
         int periodFrom = 1;
         int periodTo = 7;
         int durationsPerPeriod = 5;
 
-        String taskassignmentfile = basePath + "le/techniciancost/taskassignment.json";
+        String taskassignmentfile = basePath + "/techniciancost/taskassignment.json";
         HardSoftLongScore score = HardSoftLongScore.of(0, -2);
 
-        TestUtil.executeTest(taskfile, technicianfile, controlfile, periodFrom, periodTo,
+        StringBuilder testDesc = new StringBuilder();
+        testDesc.append("TechnicianCost:  A test with one task and two technicians ")
+                .append("with the same capabilities but for cost.");
+
+        TestUtil.executeTest(testDesc.toString(), taskfile, technicianfile, controlfile, periodFrom, periodTo,
                             durationsPerPeriod, taskassignmentfile, score);
     }
 }
